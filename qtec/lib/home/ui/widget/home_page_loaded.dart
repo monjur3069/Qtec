@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:qtec/details/ui/pages/product_details_page.dart';
 import 'package:qtec/home/model/home_model/HomeModel.dart';
 import 'package:qtec/home/ui/widget/home_page_slider.dart';
 
 import '../../../constants.dart';
 
 class HomePageLoaded extends StatefulWidget {
-
   HomeModel model;
 
-  HomePageLoaded({Key? key,required this.model}) : super(key: key);
+  HomePageLoaded({Key? key, required this.model}) : super(key: key);
 
   @override
   State<HomePageLoaded> createState() => _HomePageLoadedState();
 }
 
 class _HomePageLoadedState extends State<HomePageLoaded> {
-
   final searchController = TextEditingController();
 
   @override
@@ -59,31 +58,45 @@ class _HomePageLoadedState extends State<HomePageLoaded> {
               child: SizedBox(
                 height: MediaQuery.of(context).size.height,
                 child: GridView.builder(
-                  gridDelegate:
-                  const SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 6,
                       mainAxisSpacing: 30,
                       childAspectRatio: 0.6),
                   itemCount: widget.model.data!.products!.results!.length,
                   itemBuilder: (context, index) {
+                    var stk =
+                        widget.model!.data!.products!.results![index].stock!;
+
                     return InkWell(
-                      onTap: () {},
+                      onTap: () => Navigator.pushNamed(
+                          context, ProductDetailsPage.routeName),
                       child: Stack(
                         clipBehavior: Clip.none,
                         children: [
                           HomePageSlider(
-                            title: widget.model.data!.products!.results![index].productName!,
-                            img: widget.model.data!.products!.results![index].image!,
-                            currentCharge: widget.model.data!.products!.results![index].charge!.currentCharge!,
-                            sellingPrice: widget.model.data!.products!.results![index].charge!.sellingPrice!,
-                            profit: widget.model.data!.products!.results![index].charge!.profit!,
+                            title: widget.model.data!.products!.results![index]
+                                .productName!,
+                            img: widget
+                                .model.data!.products!.results![index].image!,
+                            currentCharge: widget.model.data!.products!
+                                .results![index].charge!.currentCharge!,
+                            sellingPrice: widget.model.data!.products!
+                                .results![index].charge!.sellingPrice!,
+                            profit: widget.model.data!.products!.results![index]
+                                .charge!.profit!,
                           ),
                           Positioned(
                               bottom: -20,
                               left: 0,
                               right: 0,
-                              child: FloatingActionButton(onPressed: (){},child: Icon(Icons.add),elevation: 0,)),
+                              child: stk != 0
+                                  ? FloatingActionButton(
+                                      onPressed: () {},
+                                      child: Icon(Icons.add),
+                                      elevation: 0,
+                                    )
+                                  : Text("")),
                           Positioned(
                             top: 8,
                             right: 40,
@@ -91,10 +104,23 @@ class _HomePageLoadedState extends State<HomePageLoaded> {
                               height: 20.h,
                               width: 80.w,
                               decoration: BoxDecoration(
-                                  color: Color(0xffFFCCCC),
-                                  borderRadius: BorderRadius.circular(5.r)
+                                  color: stk != 0
+                                      ? Colors.transparent
+                                      : Color(0xffFFCCCC),
+                                  borderRadius: BorderRadius.circular(5.r)),
+                              child: Center(
+                                child: stk != 0
+                                    ? Text(
+                                  "",
+                                )
+                                    : Text(
+                                  "স্টকে নেই",
+                                  style: TextStyle(
+                                      fontSize: 14.sp,
+                                      fontWeight: FontWeight.w500,
+                                      color: Color(0xffC62828)),
+                                ),
                               ),
-                              child: Center(child: Text("স্টকে নেই",style: TextStyle(fontSize: 14.sp,fontWeight: FontWeight.w500,color: Color(0xffC62828)),),),
                             ),
                           ),
                         ],
