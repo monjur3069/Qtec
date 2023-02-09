@@ -32,6 +32,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Color(0xffE5E5E5),
       body: Container(
         margin: const EdgeInsets.all(8.0),
         child: BlocProvider(

@@ -1,27 +1,111 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:qtec/home/model/home_model/HomeModel.dart';
+import 'package:qtec/home/ui/widget/home_page_slider.dart';
 
-class HomePageLoaded extends StatelessWidget {
+import '../../../constants.dart';
+
+class HomePageLoaded extends StatefulWidget {
 
   HomeModel model;
 
   HomePageLoaded({Key? key,required this.model}) : super(key: key);
 
   @override
+  State<HomePageLoaded> createState() => _HomePageLoadedState();
+}
+
+class _HomePageLoadedState extends State<HomePageLoaded> {
+
+  final searchController = TextEditingController();
+
+  @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(left: 16.0.w, right: 5.w),
-      child: ListView.builder(
-        itemCount: model.data!.products!.results!.length,
-        itemBuilder: (context, index) {
-          return Column(
-            children: [
-              Text(model.data!.products!.results![index].productName!),
-              SizedBox(height: 5.h,)
-            ],
-          );
-        },
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.only(left: 16.0.w, right: 5.w),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(5.0),
+              child: TextField(
+                controller: searchController,
+                decoration: InputDecoration(
+                    hintText: 'কাঙ্ক্ষিত পণ্যটি খুঁজুন',
+                    hintStyle: TextStyle(
+                        fontFamily: customFont,
+                        color: Color(0xFF989898),
+                        fontSize: 12,
+                        fontWeight: FontWeight.w500),
+                    suffixIcon: Icon(
+                      Icons.search,
+                      color: Color(0xFFA7A7A7),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16.r),
+                      borderSide: BorderSide(
+                        width: 0,
+                        style: BorderStyle.none,
+                      ),
+                    ),
+                    contentPadding: EdgeInsets.all(8),
+                    fillColor: Colors.white,
+                    filled: true),
+              ),
+            ),
+            SizedBox(height: 10.h),
+            Expanded(
+              child: SizedBox(
+                height: MediaQuery.of(context).size.height,
+                child: GridView.builder(
+                  gridDelegate:
+                  const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 6,
+                      mainAxisSpacing: 30,
+                      childAspectRatio: 0.6),
+                  itemCount: widget.model.data!.products!.results!.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {},
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          HomePageSlider(
+                            title: widget.model.data!.products!.results![index].productName!,
+                            img: widget.model.data!.products!.results![index].image!,
+                            currentCharge: widget.model.data!.products!.results![index].charge!.currentCharge!,
+                            sellingPrice: widget.model.data!.products!.results![index].charge!.sellingPrice!,
+                            profit: widget.model.data!.products!.results![index].charge!.profit!,
+                          ),
+                          Positioned(
+                              bottom: -20,
+                              left: 0,
+                              right: 0,
+                              child: FloatingActionButton(onPressed: (){},child: Icon(Icons.add),elevation: 0,)),
+                          Positioned(
+                            top: 8,
+                            right: 40,
+                            child: Container(
+                              height: 20.h,
+                              width: 80.w,
+                              decoration: BoxDecoration(
+                                  color: Color(0xffFFCCCC),
+                                  borderRadius: BorderRadius.circular(5.r)
+                              ),
+                              child: Center(child: Text("স্টকে নেই",style: TextStyle(fontSize: 14.sp,fontWeight: FontWeight.w500,color: Color(0xffC62828)),),),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
