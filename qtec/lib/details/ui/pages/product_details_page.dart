@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 
 class ProductDetailsPage extends StatefulWidget {
   static const String routeName = '/detailsPage';
-  const ProductDetailsPage({Key? key}) : super(key: key);
+
+  String? slg;
+  ProductDetailsPage({required this.slg, Key? key}) : super(key: key);
 
   @override
   State<ProductDetailsPage> createState() => _ProductDetailsPageState();
@@ -123,7 +125,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         Row(
                           children: [
                             Text(
-                              'ব্রান্ডঃ প্রিঞ্জেলস',
+                              'ব্রান্ডঃ ${widget.slg!}',
                               style: TextStyle(
                                   fontFamily: 'Baloo Da 2',
                                   color: Colors.black,

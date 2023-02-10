@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qtec/details/ui/pages/product_details_page.dart';
 import 'package:qtec/home/model/home_model/HomeModel.dart';
 import 'package:qtec/home/ui/widget/home_page_slider.dart';
 
 import '../../../constants.dart';
+import '../../../details/ui/pages/product_details_page.dart';
+
 
 class HomePageLoaded extends StatefulWidget {
   HomeModel model;
@@ -55,79 +56,89 @@ class _HomePageLoadedState extends State<HomePageLoaded> {
             ),
             SizedBox(height: 10.h),
             Expanded(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.height,
-                child: GridView.builder(
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 6,
-                      mainAxisSpacing: 30,
-                      childAspectRatio: 0.6),
-                  itemCount: widget.model.data!.products!.results!.length,
-                  itemBuilder: (context, index) {
-                    var stk =
-                        widget.model!.data!.products!.results![index].stock!;
+              child: GridView.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 6,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: 0.6),
+                itemCount: widget.model.data!.products!.results!.length,
+                itemBuilder: (context, index) {
+                  var stk =
+                  widget.model.data!.products!.results![index].stock!;
+                  var slg =
+                  widget.model.data!.products!.results![index].slug!;
 
-                    return InkWell(
-                      onTap: () => Navigator.pushNamed(
-                          context, ProductDetailsPage.routeName),
-                      child: Stack(
-                        clipBehavior: Clip.none,
-                        children: [
-                          HomePageSlider(
-                            title: widget.model.data!.products!.results![index]
-                                .productName!,
-                            img: widget
-                                .model.data!.products!.results![index].image!,
-                            currentCharge: widget.model.data!.products!
-                                .results![index].charge!.currentCharge!,
-                            sellingPrice: widget.model.data!.products!
-                                .results![index].charge!.sellingPrice!,
-                            profit: widget.model.data!.products!.results![index]
-                                .charge!.profit!,
-                          ),
-                          Positioned(
-                              bottom: -20,
-                              left: 0,
-                              right: 0,
-                              child: stk != 0
-                                  ? FloatingActionButton(
-                                      onPressed: () {},
-                                      child: Icon(Icons.add),
-                                      elevation: 0,
+                  return InkWell(
+                    onTap: () =>
+                        Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => ProductDetailsPage(slg: slg,))),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: Stack(
+                            clipBehavior: Clip.none,
+                            children: [
+                              HomePageSlider(
+                                title: widget.model.data!.products!
+                                    .results![index]
+                                    .productName!,
+                                img: widget
+                                    .model.data!.products!.results![index]
+                                    .image!,
+                                currentCharge: widget.model.data!.products!
+                                    .results![index].charge!.currentCharge!,
+                                sellingPrice: widget.model.data!.products!
+                                    .results![index].charge!.sellingPrice!,
+                                profit: widget.model.data!.products!
+                                    .results![index]
+                                    .charge!.profit!,
+                              ),
+                              Positioned(
+                                  bottom: -20,
+                                  left: 0,
+                                  right: 0,
+                                  child: stk != 0
+                                      ? FloatingActionButton(
+                                    onPressed: () {},
+                                    child: Icon(Icons.add),
+                                    elevation: 0,
+                                  )
+                                      : Text("")),
+                              Positioned(
+                                top: 6,
+                                right: 15,
+                                child: Container(
+                                  height: 20.h,
+                                  width: 65.w,
+                                  decoration: BoxDecoration(
+                                      color: stk != 0
+                                          ? Colors.transparent
+                                          : Color(0xffFFCCCC),
+                                      borderRadius: BorderRadius.circular(5.r)),
+                                  child: Center(
+                                    child: stk != 0
+                                        ? Text(
+                                      "",
                                     )
-                                  : Text("")),
-                          Positioned(
-                            top: 8,
-                            right: 40,
-                            child: Container(
-                              height: 20.h,
-                              width: 80.w,
-                              decoration: BoxDecoration(
-                                  color: stk != 0
-                                      ? Colors.transparent
-                                      : Color(0xffFFCCCC),
-                                  borderRadius: BorderRadius.circular(5.r)),
-                              child: Center(
-                                child: stk != 0
-                                    ? Text(
-                                  "",
-                                )
-                                    : Text(
-                                  "স্টকে নেই",
-                                  style: TextStyle(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xffC62828)),
+                                        : Text(
+                                      "স্টকে নেই",
+                                      style: TextStyle(
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w500,
+                                          color: Color(0xffC62828)),
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
-                  },
-                ),
+                        ),
+                        SizedBox(height: 20.h)
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ],

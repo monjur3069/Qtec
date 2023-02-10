@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:qtec/details/ui/pages/product_details_page.dart';
 
 import 'home/ui/pages/home_page.dart';
 
@@ -26,11 +25,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               primarySwatch: Colors.blue,
             ),
-            initialRoute: HomePage.routeName,
-            routes: {
-              HomePage.routeName : (_) => HomePage(),
-              ProductDetailsPage.routeName : (_) => ProductDetailsPage()
-            },
+            home: HomePage(),
           );
         });
   }
