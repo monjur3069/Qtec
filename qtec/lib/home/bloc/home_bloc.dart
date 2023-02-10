@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 
-import '../db_helper/home_api/home_api_repository.dart';
 
+import '../resources/home_api/home_api_repository.dart';
 import 'home_event.dart';
 import 'home_state.dart';
 

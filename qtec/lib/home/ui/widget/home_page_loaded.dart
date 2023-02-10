@@ -4,6 +4,7 @@ import 'package:qtec/home/model/home_model/HomeModel.dart';
 import 'package:qtec/home/ui/widget/home_page_slider.dart';
 
 import '../../../constants.dart';
+import '../../../details/ui/pages/details-page.dart';
 import '../../../details/ui/pages/product_details_page.dart';
 
 
@@ -72,7 +73,7 @@ class _HomePageLoadedState extends State<HomePageLoaded> {
                   return InkWell(
                     onTap: () =>
                         Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => ProductDetailsPage(slg: slg,))),
+                            context, MaterialPageRoute(builder: (context) => DetailsPage(slg))),
                     child: Column(
                       children: [
                         Expanded(
