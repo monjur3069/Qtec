@@ -5,7 +5,6 @@ import 'package:qtec/home/ui/widget/home_page_slider.dart';
 
 import '../../../constants.dart';
 import '../../../details/ui/pages/details-page.dart';
-import '../../../details/ui/pages/product_details_page.dart';
 
 
 class HomePageLoaded extends StatefulWidget {
@@ -65,15 +64,14 @@ class _HomePageLoadedState extends State<HomePageLoaded> {
                     childAspectRatio: 0.6),
                 itemCount: widget.model.data!.products!.results!.length,
                 itemBuilder: (context, index) {
-                  var stk =
-                  widget.model.data!.products!.results![index].stock!;
-                  var slg =
-                  widget.model.data!.products!.results![index].slug!;
+                  var stk = widget.model.data!.products!.results![index].stock!;
+                  var slg = widget.model.data!.products!.results![index].slug!;
 
                   return InkWell(
-                    onTap: () =>
-                        Navigator.push(
-                            context, MaterialPageRoute(builder: (context) => DetailsPage(slg))),
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => DetailsPage(slg))),
                     child: Column(
                       children: [
                         Expanded(
@@ -82,28 +80,31 @@ class _HomePageLoadedState extends State<HomePageLoaded> {
                             children: [
                               HomePageSlider(
                                 title: widget.model.data!.products!
-                                    .results![index]
-                                    .productName!,
-                                img: widget
-                                    .model.data!.products!.results![index]
-                                    .image!,
+                                    .results![index].productName!,
+                                img: widget.model.data!.products!
+                                    .results![index].image!,
                                 currentCharge: widget.model.data!.products!
                                     .results![index].charge!.currentCharge!,
                                 sellingPrice: widget.model.data!.products!
                                     .results![index].charge!.sellingPrice!,
                                 profit: widget.model.data!.products!
-                                    .results![index]
-                                    .charge!.profit!,
+                                    .results![index].charge!.profit!,
                               ),
                               Positioned(
                                   bottom: -20,
                                   left: 0,
                                   right: 0,
                                   child: stk != 0
-                                      ? FloatingActionButton(
-                                    onPressed: () {},
-                                    child: Icon(Icons.add),
-                                    elevation: 0,
+                                      ? SizedBox(
+                                    height: 50.h,
+                                    width: 50.h,
+                                    child: FittedBox(
+                                      child: FloatingActionButton(
+                                        onPressed: () {},
+                                        child: Icon(Icons.add),
+                                        elevation: 0,
+                                      ),
+                                    ),
                                   )
                                       : Text("")),
                               Positioned(
@@ -120,15 +121,15 @@ class _HomePageLoadedState extends State<HomePageLoaded> {
                                   child: Center(
                                     child: stk != 0
                                         ? Text(
-                                      "",
-                                    )
+                                            "",
+                                          )
                                         : Text(
-                                      "স্টকে নেই",
-                                      style: TextStyle(
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w500,
-                                          color: Color(0xffC62828)),
-                                    ),
+                                            "স্টকে নেই",
+                                            style: TextStyle(
+                                                fontSize: 14.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: Color(0xffC62828)),
+                                          ),
                                   ),
                                 ),
                               ),
